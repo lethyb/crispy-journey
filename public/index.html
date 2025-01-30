@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go WASM Demo</title>
+</head>
+<body>
+    <h1>Go WebAssembly Demo</h1>
+    <button onclick="runGo()">Run Go Program</button>
+    <p id="output"></p>
+
+    <script>
+        async function runGo() {
+            const go = new Go();
+            const wasm = await WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject);
+            go.run(wasm.instance);
+            document.getElementById("output").innerText = hello(); // Calls Go function
+        }
+    </script>
+
+    <script src="wasm_exec.js"></script> <!-- Go WebAssembly runtime -->
+</body>
+</html>
